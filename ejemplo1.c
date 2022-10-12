@@ -36,6 +36,9 @@ void gets_example_func(void) {
   buf[strlen(buf) - 1] = '\0';
 }
 
+
+//STR30-C. Do not attempt to modify string literals
+//Noncompliant Code Example (Result of strrchr())
 const char *get_dirname(const char *pathname) {
   char *slash;
   slash = strrchr(pathname, '/');
@@ -50,6 +53,9 @@ void get_y_or_n(void) {
 	char response[8];
 
 	printf("Continue? [y] n: ");  
+
+  //Regla MSC24-C. Do not use deprecated or obsolescent functions
+  //Usar fgets en su lugar
 	gets(response);
 
 	if (response[0] == 'n') 
@@ -66,17 +72,24 @@ int main(int argc, char *argv[])
     char array3[16];
     char array4[16];
     char array5 []  = "01234567890123456";
+
+    //Regla STR30-C. Do not attempt to modify string literals
+    //Seria char ptr_char[]  = "new string literal";
     char *ptr_char  = "new string literal";
     int size_array1 = strlen("аналитик");
     int size_array2 = 100;
     
    // char analitic1[size_array1]="аналитик";
    // char analitic2[size_array2]="аналитик";
+
+    //Regla STR11-C: Do not specify the bound of a character array initialized with a string literal
+    //Seria char analitic3[]="аналитик";
     char analitic3[100]="аналитик";
 
     puts(get_dirname(__FILE__));
 
-        
+    //Regla MSC24-C. Do not use deprecated or obsolescent functions
+    //Utilizar strcpy_s en su lugar
     strcpy(key, argv[1]);  
     strcat(key, " = ");  
     strcat(key, argv[2]);
@@ -96,6 +109,8 @@ int main(int argc, char *argv[])
     puts (s2);
     printf ("\n");
     
+    //Regla MSC24-C. Do not use deprecated or obsolescent functions
+    //Utilizar strncpy_s en su lugar
     strncpy(array3, array5, sizeof(array3));  
     strncpy(array4, array3, strlen(array3));
     
