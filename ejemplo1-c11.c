@@ -23,7 +23,7 @@ enum { BUFFER_MAX_SIZE = 1024 };
 
 //Regla STR30-C. Do not attempt to modify string literals
 //R no se puede utilizar en C es solo de C++
-//Hay que poner el char en la misma linea
+//Hay que poner el char en la misma linea o separarlo con '\'
 const char* s1 = "foo(\nHello\nWorld\n)foo";
 const char* s2 = "\nHello\nWorld\n";
 
@@ -35,6 +35,9 @@ int gets_example_func(void) {
         return 1;
   }
   buf[strlen(buf) - 1] = '\0';
+
+  //Al ser int hay que aniadir un return si no da warning
+  return 0; 
 }
 
 const char *get_dirname(const char *pathname) {
@@ -51,7 +54,10 @@ void get_y_or_n(void) {
 	char response[8];
 
 	printf("Continue? [y] n: ");  
-	fgets(response, sizeof(response), stdin); //gets esta deprecated utilizar fgets en su lugar
+
+  //warning implicit declaration of function ‘gets’; did you mean ‘fgets’? [-Wimplicit-function-declaration]
+  //gets esta deprecated utilizar fgets en su lugar
+	fgets(response, sizeof(response), stdin); 
 
 	if (response[0] == 'n') 
 		exit(0);  
@@ -67,14 +73,21 @@ int main(int argc, char *argv[])
     char array3[16];
     char array4[16];
     char array5 []  = "01234567890123456";
-    char ptr_char[]  = "new string literal";
+
+    //warning variable ‘ptr_char’ set but not used [-Wunused-but-set-variable]
+    //Comento esta variable ya que no esta siendo utilizada solo se cambia un valor pero no se utiliza y da warning
+    //char ptr_char[]  = "new string literal";
+
+
     //Las dos variables de abajo no se utilizan con lo cual da un warning
     //int size_array1 = strlen("аналитик");
     //int size_array2 = 100;
     
    // char analitic1[size_array1]="аналитик";
    // char analitic2[size_array2]="аналитик";
-    //char analitic3[100]="аналитик"; Esta variable no se utiliza con lo cual da un warning
+
+    //Esta variable no se utiliza con lo cual da un warning
+    //char analitic3[100]="аналитик"; 
 
     puts(get_dirname(__FILE__));
 
@@ -102,7 +115,9 @@ int main(int argc, char *argv[])
     strncpy(array4, array3, strlen(array3));
     
     array5 [0] = 'M';
-    ptr_char [0] = 'N';
+
+    //Al comentar la linea en la que se declara da error al no estar definida
+    //ptr_char [0] = 'N';
     
     array3[sizeof(array3)-1]='\0';
     
