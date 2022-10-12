@@ -28,11 +28,11 @@ const char* s1 = "foo(\nHello\nWorld\n)foo";
 const char* s2 = "\nHello\nWorld\n";
 
 //Si retorna un valor no puede ser void
-void gets_example_func(void) {
+int gets_example_func(void) {
   char buf[BUFFER_MAX_SIZE];
  
   if (fgets(buf, sizeof(buf), stdin) == NULL) {
-        return ;
+        return 1;
   }
   buf[strlen(buf) - 1] = '\0';
 }
@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
     char array3[16];
     char array4[16];
     char array5 []  = "01234567890123456";
-    char *ptr_char  = "new string literal";
+    char ptr_char[]  = "new string literal";
     //Las dos variables de abajo no se utilizan con lo cual da un warning
     //int size_array1 = strlen("аналитик");
     //int size_array2 = 100;
